@@ -1,0 +1,47 @@
+<div class="card">
+    <div class="card-header">
+        {{pageTitle}} <!--Interpolation-->
+    </div>
+    <div class="card-body"> <!--Twitter Bootstrap Class-->
+        <div class="row">
+            <div class="col-md-2">Filter by:</div>
+            <div class="col-md-4">
+                <input type="text"/> <!--Define an input box for entry of the filter string-->
+            </div>
+        </div>
+    </div>
+    <div class=" row">
+        <div class="col-md-6">
+            <h4>Filtered by: </h4>
+        </div>
+    </div>
+    <!--Table-->
+    <div class="table-responsive">
+        <table class='table' *ngIf='products.length'> <!--Structural directive-->
+            <thead>
+                <tr>
+                    <th>
+                        <button class="btn btn-primary">
+                            Show Image
+                        </button>
+                    </th>
+                    <th>Product</th>
+                    <th>Code</th>
+                    <th>Available</th>
+                    <th>Price</th>
+                    <th>5 Star Rating</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor='let product of products'> <!--Structural directive-->
+                <td></td>
+                <td>{{product.productName}}</td>
+                <td>{{product.productCode}}</td>
+                <td>{{product.releaseDate}}</td>
+                <td>{{product.price}}</td>
+                <td>{{product.starRating}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
