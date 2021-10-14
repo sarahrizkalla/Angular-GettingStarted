@@ -1,0 +1,21 @@
+thead {
+    color: darkgoldenrod;
+    background-color: rgb(210, 235, 240);
+}
+
+button{
+    background-color: darkgoldenrod;
+    border: none;
+    text-align: center;
+    border-radius: 4px;
+    box-shadow: 0 2px #999;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: rgb(151, 111, 9);
+}
+
+button:focus {
+    background-color: darkgoldenrod;
+}
