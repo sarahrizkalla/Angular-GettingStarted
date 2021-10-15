@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { IProduct } from "./product";
+import { ProductService } from "./product.service";
 
 @Component({
     selector: 'pm-products',
@@ -11,28 +12,10 @@ export class ProductListComponent implements OnInit {
     imageWidth: number = 50;
     imageMargin: number = 2;
     showImage: boolean = false;
-    products: IProduct[] = [
-        {
-            "productId": 2,
-            "productName": "Garden Cart",
-            "productCode": "GDN-0023",
-            "releaseDate": "March 18, 2021",
-            "description": "15 gallon capacity rolling garden cart",
-            "price": 32.99,
-            "starRating": 4.2,
-            "imageUrl": "assets/images/garden_cart.png"
-        },
-        {
-            "productId": 5,
-            "productName": "Hammer",
-            "productCode": "TBX-0048",
-            "releaseDate": "May 21, 2021",
-            "description": "Curved claw steel hammer",
-            "price": 8.9,
-            "starRating": 4.8,
-            "imageUrl": "assets/images/hammer.png"
-        }
-    ];
+    products: IProduct[] = [];
+    
+    constructor(private productService: ProductService){}
+
     filteredProducts: IProduct[] = [];
     private _listFilter: string = ''; // Backing variable
     
@@ -47,8 +30,9 @@ export class ProductListComponent implements OnInit {
         this.filteredProducts = this.performFilter(value);
     }
     // Other Methods
-    ngOnInit(): void {
-        this.listFilter = 'cart';
+    ngOnInit(): void { // Initializations
+        this.products = this.productService.getproducts(); // Get list of products
+        this.filteredProducts = this.products; // Set filtered products to the initial products list, since we bind on it
     }
     toggleImage(): void {
        this.showImage = !this.showImage;
