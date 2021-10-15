@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Subscription } from "rxjs";
 import { IProduct } from "./product";
 import { ProductService } from "./product.service";
 
@@ -7,12 +8,14 @@ import { ProductService } from "./product.service";
     templateUrl: './product-list.component.html',
     styleUrls: ['./product-list.component.css']
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent implements OnInit, OnDestroy {
     pageTitle: string= 'Product List';
     imageWidth: number = 50;
     imageMargin: number = 2;
     showImage: boolean = false;
     products: IProduct[] = [];
+    errorMessage: string = '';
+    sub!: Subscription; // The ! is to inform Typescript that we will handle this variable later. It wont be left unassigned.
     
     constructor(private productService: ProductService){}
 
@@ -31,8 +34,13 @@ export class ProductListComponent implements OnInit {
     }
     // Other Methods
     ngOnInit(): void { // Initializations
-        this.products = this.productService.getproducts(); // Get list of products
-        this.filteredProducts = this.products; // Set filtered products to the initial products list, since we bind on it
+        this.sub = this.productService.getproducts().subscribe({
+          next: products => {
+                this.products = products;
+                this.filteredProducts = this.products; // Set filtered products to the initial products list, since we bind on it
+            },
+          error: err => this.errorMessage = err
+        }); // Subscribe to get list of products
     }
     toggleImage(): void {
        this.showImage = !this.showImage;
@@ -44,5 +52,8 @@ export class ProductListComponent implements OnInit {
     }
     onRatingClicked(message: string): void {
         this.pageTitle = 'Product List: ' + message;
+    }
+    ngOnDestroy(): void{
+        this.sub.unsubscribe();
     }
 }
