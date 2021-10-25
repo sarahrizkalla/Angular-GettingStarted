@@ -33,7 +33,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     }
     // Other Methods
     ngOnInit(): void { // Initializations
-        this.sub = this.productService.getproducts().subscribe({
+        this.sub = this.productService.getProducts().subscribe({
           next: products => {
                 this.products = products;
                 this.filteredProducts = this.products; // Set filtered products to the initial products list, since we bind on it
